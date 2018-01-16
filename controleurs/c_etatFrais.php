@@ -32,5 +32,10 @@ switch ($action) {
             $dateModif = dateAnglaisVersFrancais($dateModif);
             include("vues/v_etatFrais.php");
         }
+    case 'voirTablettes':
+        {
+            $tablette = $pdo->getLaTablette($idVisiteur);
+            include("vues/v_listeTablettes.php");
+        }
 }
 ?>

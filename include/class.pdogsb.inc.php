@@ -310,6 +310,15 @@ class PdoGsb
         }
         return $lesMois;
     }
+
+    public function getLaTablette($idVisiteur)
+    {
+        $req = "select Tablette.libelle, Tablette.type, Tablette.marque, Tablette.memoireVive, Tablette.memoireDisque, Tablette.prix 
+        from Visiteur inner join Tablette on Tablette.id = Visiteur.Tablette where Visiteur.id = '$idVisiteur'";
+        $res = PdoGsb::$monPdo->query($req)->fetch(PDO::FETCH_OBJ);
+
+        return $res;
+    }
 }
 
 ?>
