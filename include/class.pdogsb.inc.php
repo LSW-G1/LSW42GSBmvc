@@ -311,6 +311,11 @@ class PdoGsb
         return $lesMois;
     }
 
+    /**
+     * Retourne la tablette que possède un visiteur
+     * @param $idVisiteur
+     * @return mixed
+     */
     public function getLaTablette($idVisiteur)
     {
         $req = "select Tablette.libelle, Tablette.type, Tablette.marque, Tablette.memoireVive, Tablette.memoireDisque, Tablette.prix 
