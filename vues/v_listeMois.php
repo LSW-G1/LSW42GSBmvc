@@ -3,7 +3,6 @@
     <h3>Mois à sélectionner : </h3>
     <form action="index.php?uc=etatFrais&action=voirEtatFrais" method="post">
         <div class="corpsForm">
-
             <p>
 
                 <label for="lstMois" accesskey="n">Mois : </label>

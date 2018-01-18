@@ -7,6 +7,7 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
+DROP DATABASE IF EXISTS `gsb_frais`;
 CREATE DATABASE `gsb_frais` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `gsb_frais`;
 
@@ -38,7 +39,8 @@ CREATE TABLE `FicheFrais` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `FicheFrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValide`, `dateModif`, `idEtat`) VALUES
-  ('a42',	'01',	0,	0.00,	'2018-01-14',	'CR');
+  ('a42',	'01',	0,	0.00,	'2018-01-14',	'CR'),
+  ('daf',	'01',	0,	0.00,	'2018-01-18',	'CR');
 
 DROP TABLE IF EXISTS `FraisForfait`;
 CREATE TABLE `FraisForfait` (
@@ -70,7 +72,11 @@ INSERT INTO `LigneFraisForfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quanti
   ('a42',	'01',	'ETP',	1),
   ('a42',	'01',	'KM',	5),
   ('a42',	'01',	'NUI',	2),
-  ('a42',	'01',	'REP',	1);
+  ('a42',	'01',	'REP',	1),
+  ('daf',	'01',	'ETP',	0),
+  ('daf',	'01',	'KM',	0),
+  ('daf',	'01',	'NUI',	0),
+  ('daf',	'01',	'REP',	0);
 
 DROP TABLE IF EXISTS `LigneFraisHorsForfait`;
 CREATE TABLE `LigneFraisHorsForfait` (
@@ -170,6 +176,7 @@ INSERT INTO `Visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, 
   ('b50',	'Clepkens',	'Christophe',	'cclepkens',	'bw1us',	'12 allée des Anges',	'93230',	'Romainville',	'2003-08-11',	13),
   ('b59',	'Cottin',	'Vincenne',	'vcottin',	'2hoh9',	'36 rue Des Roches',	'93100',	'Monteuil',	'2001-11-18',	14),
   ('c14',	'Daburon',	'François',	'fdaburon',	'7oqpv',	'13 rue de Chanzy',	'94000',	'Créteil',	'2002-02-11',	15),
-  ('c3',	'De',	'Philippe',	'pde',	'gk9kx',	'13 rue Barthes',	'94000',	'Créteil',	'2010-12-14',	16);
+  ('c3',	'De',	'Philippe',	'pde',	'gk9kx',	'13 rue Barthes',	'94000',	'Créteil',	'2010-12-14',	16),
+  ('daf',	'daf',	'daf',	'daf',	'daf',	NULL,	NULL,	NULL,	'0000-00-00',	35);
 
--- 2018-01-16 19:06:16
+-- 2018-01-18 15:29:30

@@ -324,6 +324,14 @@ class PdoGsb
 
         return $res;
     }
+
+    public function getTablettesEnStock()
+    {
+        $req = "SELECT * FROM Tablette WHERE id not in (SELECT tablette FROM Visiteur)";
+        $res = PdoGsb::$monPdo->query($req)->fetchAll(PDO::FETCH_OBJ);
+
+        return $res;
+    }
 }
 
 ?>
