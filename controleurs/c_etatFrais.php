@@ -35,7 +35,7 @@ switch ($action) {
     case 'voirTablettes':
         {
             $tablette = $pdo->getLaTablette($idVisiteur);
-            include("vues/v_listeTablettes.php");
+            include("vues/v_tablette.php");
         }
 }
 ?>
