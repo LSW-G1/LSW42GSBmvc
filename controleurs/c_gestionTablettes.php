@@ -41,5 +41,15 @@ switch ($action) {
             }
             break;
         }
+    case 'validerChangement':
+        {
+            $id = $_POST["id"] || "";
+            $libelle = $_POST["libelle"];
+            $type = $_POST["type"];
+            $marque = $_POST["marque"];
+            $ram = $_POST["ram"];
+            $disque = $_POST["disque"];
+            $prix = $_POST["prix"];
+        }
 }
 ?>
