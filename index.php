@@ -27,6 +27,11 @@ switch ($uc) {
             include("controleurs/c_etatFrais.php");
             break;
         }
+    case 'gererTablettes':
+        {
+            include("controleurs/c_gestionTablettes.php");
+            break;
+        }
 }
 include("vues/v_pied.php");
 ?>

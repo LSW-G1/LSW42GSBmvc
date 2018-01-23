@@ -32,22 +32,5 @@ switch ($action) {
             $dateModif = dateAnglaisVersFrancais($dateModif);
             include("vues/v_etatFrais.php");
         }
-    case 'voirTablette':
-        {
-            $tablette = $pdo->getLaTablette($idVisiteur);
-            include("vues/v_tablette.php");
-            break;
-        }
-    case 'voirTablettesEnStock':
-        {
-            if ($_SESSION['idVisiteur'] == "daf") {
-                $tablettes = $pdo->getTablettesEnStock();
-                include("vues/v_tablettesEnStock.php");
-            } else {
-                header('Location: index.php?uc=etatFrais&action=voirTablette');
-            }
-            break;
-        }
-
 }
 ?>

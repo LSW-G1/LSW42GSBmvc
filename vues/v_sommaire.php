@@ -21,11 +21,11 @@
                 fiches de frais</a>
         </li>
         <li class="smenu">
-            <a href="index.php?uc=etatFrais&action=voirTablette" title="Votre tablette">Votre tablette</a>
+            <a href="index.php?uc=gererTablettes&action=voirTablette" title="Votre tablette">Votre tablette</a>
         </li>
         <?php if ($_SESSION["idVisiteur"] == "daf") { ?>
         <li class="smenu">
-            <a href="index.php?uc=etatFrais&action=voirTablettesEnStock" title="Tablettes en Stock">Tablettes en stock</a>
+            <a href="index.php?uc=gererTablettes&action=voirTablettesEnStock" title="Tablettes en Stock">Tablettes en stock</a>
         </li>
         <?php } ?>
         <li class="smenu">

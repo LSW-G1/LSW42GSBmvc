@@ -332,6 +332,7 @@ class PdoGsb
 
         return $res;
     }
+
 }
 
 ?>
