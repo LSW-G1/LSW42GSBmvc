@@ -369,9 +369,36 @@ class PdoGsb
     {
         $req = "INSERT INTO Tablette VALUES(?, ?, ?, ?, ?, ?, ?)";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->execute(["", $tablette["libelle"], $tablette["type"], $tablette["marque"], $tablette["RAM"], $tablette["disque"], $tablette["prix"]]);
+        $res->execute(["", $tablette["libelle"], $tablette["type"], $tablette["marque"], $tablette["ram"], $tablette["disque"], $tablette["prix"]]);
 
         return null;
+    }
+
+    /**
+     * Change a tablette
+     *
+     * @param $tablette
+     * @return null
+     */
+    public function changeTablette($tablette)
+    {
+        $req = "UPDATE Tablette SET libelle = ?, type = ?, marque = ?, memoireVive = ?, memoireDisque = ?, prix = ? WHERE id = ?";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute([$tablette["libelle"], $tablette["type"], $tablette["marque"], $tablette["ram"], $tablette["disque"], $tablette["prix"], $_POST["id"]]);
+
+    }
+
+    /**
+     * Delete a tablette
+     *
+     * @param $tabletteid
+     */
+    public function deleteTablette($tabletteid)
+    {
+        print_r($tabletteid);
+        $req = "DELETE FROM Tablette WHERE id = ?";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute([$tabletteid]);
     }
 
 }

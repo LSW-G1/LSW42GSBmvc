@@ -27,6 +27,9 @@
             <li class="smenu">
                 <a href="index.php?uc=gererTablettes&action=voirTablettesEnStock" title="Tablettes en Stock">Tablettes en stock</a>
             </li>
+            <li class="smenu">
+                <a href="index.php?uc=gererTablettes&action=gererTablettes" title="Gestion Tablettes">Gestion Tablettes</a>
+            </li>
         <?php } ?>
         <li class="smenu">
             <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>

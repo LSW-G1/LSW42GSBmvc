@@ -15,7 +15,7 @@ switch ($action) {
                 $tablettes = $pdo->getTablettesEnStock();
                 include("vues/v_tablettesEnStock.php");
             } else {
-                header('Location: index.php?uc=etatFrais&action=voirTablette');
+                header('Location: index.php?uc=gererTablettes&action=voirTablette');
             }
             break;
         }
@@ -25,7 +25,7 @@ switch ($action) {
                 $tablettes = $pdo->getTablettes();
                 include("vues/v_gestionTablettes.php");
             } else {
-                header('Location: index.php?uc=etatFrais&action=voirTablette');
+                header('Location: index.php?uc=gererTablettes&action=voirTablette');
             }
             break;
         }
@@ -37,19 +37,32 @@ switch ($action) {
                 }
                 include("vues/v_changerTablette.php");
             } else {
-                header('Location: index.php?uc=etatFrais&action=voirTablette');
+                header('Location: index.php?uc=gererTablettes&action=voirTablette');
             }
             break;
         }
     case 'validerChangement':
         {
-            $id = $_POST["id"] || "";
-            $libelle = $_POST["libelle"];
-            $type = $_POST["type"];
-            $marque = $_POST["marque"];
-            $ram = $_POST["ram"];
-            $disque = $_POST["disque"];
-            $prix = $_POST["prix"];
+            if ($_SESSION['idVisiteur'] == "daf") {
+                if (!empty($_POST["id"])) {
+                    $pdo->changeTablette($_POST);
+                } else {
+                    $pdo->addTablette($_POST);
+                }
+            } else {
+                header("Location: index.php?uc=gererTablettes&action=voirTablette");
+            }
+            break;
+        }
+    case 'supprimerTablette':
+        {
+            if ($_SESSION['idVisiteur'] == "daf") {
+                if (!empty($_GET["id"])) {
+                    $pdo->deleteTablette($_GET["id"]);
+                }
+            }
+            header("Location: index.php?uc=gererTablettes&action=gererTablettes");
+            break;
         }
 }
 ?>

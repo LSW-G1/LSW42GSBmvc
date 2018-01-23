@@ -1,11 +1,11 @@
 <div id="contenu">
-	<form action="index.php?uc=gererTablettes&action=ValiderChangement" method="post">
+	<form action="index.php?uc=gererTablettes&action=validerChangement" method="post">
 	    <div class="corpsForm">
 
 	        <fieldset>
 	            <legend>Nouvelle tablette
 	            </legend>
-	            <input type="text" id="txtDateHF" name="id" hidden="true" size="10" maxlength="10" value=""/>
+	            <input type="text" id="txtDateHF" name="id" hidden="true" size="10" maxlength="10" value="<?= $tablette->id; ?>"/>
 	            <p>
 	                <label for="txtLibelleHF">Nom</label>
 	                <input type="text" id="txtLibelleHF" name="libelle" size="70" maxlength="256" value=""/>

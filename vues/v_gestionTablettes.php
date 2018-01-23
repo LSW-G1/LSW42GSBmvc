@@ -12,8 +12,8 @@
 		<?php
 			foreach ($tablettes as $tablette){ ?>
 			<tr>
-				<td></td>
-				<td></td>
+				<td><a href="index.php?uc=gererTablettes&action=changerTablette&id=<?= $tablette->id; ?>">Modifier</a></td>
+                <td><a href="index.php?uc=gererTablettes&action=supprimerTablette&id=<?= $tablette->id; ?>">Supprimer</a></td>
 				<td><?= $tablette->id; ?></td>
 	            <td><?= $tablette->memoireVive; ?></td>
 	            <td><?= $tablette->type; ?></td>
@@ -21,4 +21,4 @@
 		<?php } ?>
 	</table>
 
-	<a href="vues/v_changerTablette.php">+ Ajout d'une nouvelle tablette</a>
+	<a href="index.php?uc=gererTablettes&action=changerTablette">+ Ajout d'une nouvelle tablette</a>

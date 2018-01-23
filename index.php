@@ -29,7 +29,7 @@ switch ($uc) {
         }
     case 'gererTablettes':
         {
-            include("controleurs/c_gestionTablettes.php");
+            include("controleurs/c_gererTablettes.php");
             break;
         }
 }
