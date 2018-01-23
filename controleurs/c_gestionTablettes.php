@@ -19,5 +19,27 @@ switch ($action) {
             }
             break;
         }
+    case 'gererTablettes':
+        {
+            if ($_SESSION['idVisiteur'] == "daf") {
+                $tablettes = $pdo->getTablettes();
+                include("vues/v_gestionTablettes.php");
+            } else {
+                header('Location: index.php?uc=etatFrais&action=voirTablette');
+            }
+            break;
+        }
+    case 'changerTablette':
+        {
+            if ($_SESSION['idVisiteur'] == "daf") {
+                if (!empty($_GET["id"])) {
+                    $tablette = $pdo->getTabletteFromID($_GET["id"]);
+                }
+                include("vues/v_changerTablette.php");
+            } else {
+                header('Location: index.php?uc=etatFrais&action=voirTablette');
+            }
+            break;
+        }
 }
 ?>

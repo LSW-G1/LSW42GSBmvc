@@ -325,12 +325,53 @@ class PdoGsb
         return $res;
     }
 
+    /**
+     * Gets all the tablettes that nobody uses
+     *
+     * @return mixed
+     */
     public function getTablettesEnStock()
     {
-        $req = "SELECT * FROM Tablette WHERE id not in (SELECT tablette FROM Visiteur)";
+        $req = "SELECT * FROM Tablette WHERE id NOT IN (SELECT tablette FROM Visiteur)";
         $res = PdoGsb::$monPdo->query($req)->fetchAll(PDO::FETCH_OBJ);
 
         return $res;
+    }
+
+    public function getTabletteFromID($id)
+    {
+        $req = "SELECT * FROM Tablette WHERE id = $id;";
+        $res = PdoGsb::$monPdo->query($req)->fetch(PDO::FETCH_OBJ);
+
+        return $res;
+    }
+
+    /**
+     * Gets every tablettes
+     *
+     * @return mixed
+     */
+    public function getTablettes()
+    {
+        $req = "SELECT * FROM Tablette;";
+        $res = PdoGsb::$monPdo->query($req)->fetchAll(PDO::FETCH_OBJ);
+
+        return $res;
+    }
+
+    /**
+     * Adds a tablette to BDD
+     *
+     * @param $tablette
+     * @return null
+     */
+    public function addTablette($tablette)
+    {
+        $req = "INSERT INTO Tablette VALUES(?, ?, ?, ?, ?, ?, ?)";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute(["", $tablette["libelle"], $tablette["type"], $tablette["marque"], $tablette["RAM"], $tablette["disque"], $tablette["prix"]]);
+
+        return null;
     }
 
 }
