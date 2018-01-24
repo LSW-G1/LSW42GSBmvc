@@ -23,6 +23,7 @@ switch ($action) {
         {
             if ($_SESSION['idVisiteur'] == "daf") {
                 $tablettes = $pdo->getTablettes();
+                $tablettesEnStock = $pdo->getTablettesEnStock();
                 include("vues/v_gestionTablettes.php");
             } else {
                 header('Location: index.php?uc=gererTablettes&action=voirTablette');
