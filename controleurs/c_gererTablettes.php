@@ -58,7 +58,12 @@ switch ($action) {
         {
             if ($_SESSION['idVisiteur'] == "daf") {
                 if (!empty($_GET["id"])) {
-                    $pdo->deleteTablette($_GET["id"]);
+                    $result = $pdo->deleteTablette($_GET["id"]);
+                    if (!$result) {
+                        ajouterErreur("Cette tablette est affectée à un visiteur. Vous ne pouvez pas la supprimer.");
+                        include("vues/v_erreurs.php");
+                        break;
+                    }
                 }
             }
             header("Location: index.php?uc=gererTablettes&action=gererTablettes");

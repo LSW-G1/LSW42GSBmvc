@@ -395,10 +395,9 @@ class PdoGsb
      */
     public function deleteTablette($tabletteid)
     {
-        print_r($tabletteid);
         $req = "DELETE FROM Tablette WHERE id = ?";
         $res = PdoGsb::$monPdo->prepare($req);
-        $res->execute([$tabletteid]);
+        return $res->execute([$tabletteid]);
     }
 
 }
