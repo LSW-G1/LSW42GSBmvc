@@ -50,6 +50,7 @@ switch ($action) {
                 } else {
                     $pdo->addTablette($_POST);
                 }
+                header("Location: index.php?uc=gererTablettes&action=gererTablettes");
             } else {
                 header("Location: index.php?uc=gererTablettes&action=voirTablette");
             }
