@@ -311,6 +311,13 @@ class PdoGsb
         return $lesMois;
     }
 
+    /**
+     * Obtient la liste des absences
+     *
+     * @param $idVisiteur
+     * @param $mois
+     * @return array
+     */
     public function getListeAbsences($idVisiteur, $mois)
     {
         $req = "SELECT * FROM Absence, Motif WHERE Motif.code = Absence.codeMotif AND Absence.idVisiteur = '$idVisiteur' AND Absence.mois = '$mois';";
@@ -318,19 +325,7 @@ class PdoGsb
         $absences = $res->fetchAll();
         return $absences;
     }
-
-    /**
-     *
-     *
-     *
-     */
-    public function creeNouvelleAbsence($idVisiteur, $mois, $motif, $jour)
-    {
-        $req = "";
-        $res = PdoGsb::$monPdo->query($req);
-
-    } 
-
+    
 }
 
 ?>
