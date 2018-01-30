@@ -325,7 +325,45 @@ class PdoGsb
         $absences = $res->fetchAll();
         return $absences;
     }
-    
+
+    /**
+     * Obtient codes motifs pour absences
+     *
+     * @return mixed
+     */
+    public function getLesCodeMotif()
+    {
+        $req = "SELECT code FROM Motif;";
+        $res = PdoGsb::$monPdo->query($req);
+        return $res->fetchAll();
+    }
+
+    /**
+     * Créer lignes absences pour visiteur
+     *
+     * @param $idVisiteur
+     * @param $mois
+     */
+    public function creerNouvellesLigneAbsence($idVisiteur, $mois)
+    {
+        $codes = $this->getLesCodeMotif();
+
+        foreach($codes as $code){
+            $code = $code['code'];
+            $req = "INSERT INTO Absence VALUES('$idVisiteur', '$code', '$mois', 0)";
+            $res = PdoGsb::$monPdo->query($req);
+        }
+    }
+
+    public function majLignesAbsences($idVisiteur, $mois, $absences)
+    {
+        foreach ($absences as $code=>$nombre)
+        {
+            $req = "UPDATE Absence SET nombre = '$nombre' WHERE idVisiteur = '$idVisiteur' AND mois = '$mois' AND codeMotif = '$code'";
+            $res = PdoGsb::$monPdo->query($req);
+        }
+
+    }
 }
 
 ?>

@@ -11,8 +11,22 @@ switch ($action)
 	case 'saisirAbsences':
 	{
 		$lesAbsences = $pdo->getListeAbsences($idVisiteur, $mois);
+
+		if (empty($lesAbsences))
+        {
+            $pdo->creerNouvellesLigneAbsence($idVisiteur, $mois);
+            header("Refresh: 0");
+        }
+
 		include("vues/v_listeAbsences.php");
 		break;
 	}
+    case 'validerMajAbsences':
+        {
+            $absences = $_REQUEST["absences"];
+            $pdo->majLignesAbsences($idVisiteur, $mois, $absences);
+
+            header("Location: index.php?uc=gererAbsences&action=saisirAbsences");
+        }
 }
 ?>

@@ -15,7 +15,7 @@
                     ?>
                     <p>
                         <label for="absences"><?php echo $libelle ?></label>
-                        <input type="text" id="absence" name="absence[<?php echo $idFrais ?>]" size="10" maxlength="5"
+                        <input type="text" id="absence" name="absences[<?= $codeMotif ?>]" size="10" maxlength="5"
                                value="<?php echo $quantite ?>">
                     </p>
 
