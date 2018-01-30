@@ -5,7 +5,7 @@
         <div class="corpsForm">
 
             <fieldset>
-                <legend>Abences
+                <legend>Absences
                 </legend>
                 <?php
                 foreach ($lesAbsences as $uneAbsence) {

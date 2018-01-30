@@ -310,6 +310,27 @@ class PdoGsb
         }
         return $lesMois;
     }
+
+    public function getListeAbsences($idVisiteur, $mois)
+    {
+        $req = "SELECT * FROM Absences, Motif WHERE Motif.id = Absences.codeMotif AND Absences.idVisiteur = '$idVisiteur' AND Absences.mois = '$mois';";
+        $res = PdoGsb::$monPdo->query($req);
+        $absences = $res->fetchAll();
+        return $absences;
+    }
+
+    /**
+     *
+     *
+     *
+     */
+    public function creeNouvelleAbsence($idVisiteur, $mois, $motif, $jour)
+    {
+        $req = "";
+        $res = PdoGsb::$monPdo->query($req);
+
+    } 
+
 }
 
 ?>
