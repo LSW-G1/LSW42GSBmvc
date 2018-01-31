@@ -32,5 +32,20 @@
                 <input id="annuler" type="reset" value="Effacer" size="20"/>
             </p>
         </div>
-
     </form>
+    <h2>Les employés non absents du mois</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOM</th>
+            <th>PRENOM</th>
+        </tr>
+        <?php
+        foreach ($nonAbsents as $visiteur) { ?>
+            <tr>
+                <td><?= $visiteur['id']; ?></td>
+                <td><?= $visiteur['nom']; ?></td>
+                <td><?= $visiteur['prenom']; ?></td>
+            </tr>
+        <?php } ?>
+    </table>

@@ -6,21 +6,25 @@ $aaaamm = getMois(date("d/m/Y"));
 $numAnnee = substr($aaaamm, 0, 4);
 $numMois = substr($aaaamm, 4, 2);
 $mois = $numMois;
-switch ($action) 
-{
-	case 'saisirAbsences':
-	{
-		$lesAbsences = $pdo->getListeAbsences($idVisiteur, $mois);
-
-		if (empty($lesAbsences))
+switch ($action) {
+    case 'saisirAbsences':
         {
-            $pdo->creerNouvellesLigneAbsence($idVisiteur, $mois);
-            header("Refresh: 0");
-        }
+            $lesAbsences = $pdo->getListeAbsences($idVisiteur, $mois);
+            $nonAbsents = $pdo->getVisiteursNonAbsents($mois);
 
-		include("vues/v_listeAbsences.php");
-		break;
-	}
+            // Evite la boucle de reload si le visiteur n'a pas visité ses saisis frais ce mois ci.
+            if ($pdo->estPremierFraisMois($idVisiteur, $mois)) {
+                $pdo->creeNouvellesLignesFrais($idVisiteur, $mois);
+            }
+
+            if (empty($lesAbsences)) {
+                $pdo->creerNouvellesLigneAbsence($idVisiteur, $mois);
+                header("Refresh: 0");
+            }
+
+            include("vues/v_listeAbsences.php");
+            break;
+        }
     case 'validerMajAbsences':
         {
             $absences = $_REQUEST["absences"];

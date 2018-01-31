@@ -96,7 +96,7 @@ class PdoGsb
      */
     public function getNbjustificatifs($idVisiteur, $mois)
     {
-        $req = "select FicheFrais.nbJustificatifs as nb from  FicheFrais where FicheFrais.idVisiteur ='$idVisiteur' and FicheFrais.mois = '$mois'";
+        $req = "select FicheRecap.nbJustificatifs as nb from  FicheRecap where FicheRecap.idVisiteur ='$idVisiteur' and FicheRecap.mois = '$mois'";
         $res = PdoGsb::$monPdo->query($req);
         $laLigne = $res->fetch();
         return $laLigne['nb'];
@@ -144,15 +144,15 @@ class PdoGsb
     }
 
     /**
-     * met à jour le nombre de justificatifs de la table ficheFrais
+     * met à jour le nombre de justificatifs de la table FicheRecap
      * pour le mois et le visiteur concerné
      * @param $idVisiteur
      * @param $mois sous la forme aaaamm
      */
     public function majNbJustificatifs($idVisiteur, $mois, $nbJustificatifs)
     {
-        $req = "update FicheFrais set nbJustificatifs = $nbJustificatifs 
-		where FicheFrais.idVisiteur = '$idVisiteur' and FicheFrais.mois = '$mois'";
+        $req = "update FicheRecap set nbJustificatifs = $nbJustificatifs 
+		where FicheRecap.idVisiteur = '$idVisiteur' and FicheRecap.mois = '$mois'";
         PdoGsb::$monPdo->exec($req);
     }
 
@@ -165,8 +165,8 @@ class PdoGsb
     public function estPremierFraisMois($idVisiteur, $mois)
     {
         $ok = false;
-        $req = "select count(*) as nblignesfrais from FicheFrais 
-		where FicheFrais.mois = '$mois' and FicheFrais.idVisiteur = '$idVisiteur'";
+        $req = "select count(*) as nblignesfrais from FicheRecap 
+		where FicheRecap.mois = '$mois' and FicheRecap.idVisiteur = '$idVisiteur'";
         $res = PdoGsb::$monPdo->query($req);
         $laLigne = $res->fetch();
         if ($laLigne['nblignesfrais'] == 0) {
@@ -185,12 +185,11 @@ class PdoGsb
     public function creeNouvellesLignesFrais($idVisiteur, $mois)
     {
         $dernierMois = $this->dernierMoisSaisi($idVisiteur);
-        $laDerniereFiche = $this->getLesInfosFicheFrais($idVisiteur, $dernierMois);
+        $laDerniereFiche = $this->getLesInfosFicheRecap($idVisiteur, $dernierMois);
         if ($laDerniereFiche['idEtat'] == 'CR') {
-            $this->majEtatFicheFrais($idVisiteur, $dernierMois, 'CL');
-
+            $this->majEtatFicheRecap($idVisiteur, $dernierMois, 'CL');
         }
-        $req = "insert into FicheFrais(idVisiteur,mois,nbJustificatifs,montantValide,dateModif,idEtat) 
+        $req = "insert into FicheRecap(idVisiteur,mois,nbJustificatifs,montantValide,dateModif,idEtat) 
 		values('$idVisiteur','$mois',0,0,now(),'CR')";
         PdoGsb::$monPdo->exec($req);
         $lesIdFrais = $this->getLesIdFrais();
@@ -209,7 +208,7 @@ class PdoGsb
      */
     public function dernierMoisSaisi($idVisiteur)
     {
-        $req = "select max(mois) as dernierMois from FicheFrais where FicheFrais.idVisiteur = '$idVisiteur'";
+        $req = "select max(mois) as dernierMois from FicheRecap where FicheRecap.idVisiteur = '$idVisiteur'";
         $res = PdoGsb::$monPdo->query($req);
         $laLigne = $res->fetch();
         $dernierMois = $laLigne['dernierMois'];
@@ -222,11 +221,11 @@ class PdoGsb
      * @param $mois sous la forme aaaamm
      * @return un tableau avec des champs de jointure entre une fiche de frais et la ligne d'état
      */
-    public function getLesInfosFicheFrais($idVisiteur, $mois)
+    public function getLesInfosFicheRecap($idVisiteur, $mois)
     {
-        $req = "select FicheFrais.idEtat as idEtat, FicheFrais.dateModif as dateModif, FicheFrais.nbJustificatifs as nbJustificatifs, 
-			FicheFrais.montantValide as montantValide, Etat.libelle as libEtat from  FicheFrais inner join Etat on FicheFrais.idEtat = Etat.id 
-			where FicheFrais.idVisiteur ='$idVisiteur' and FicheFrais.mois = '$mois'";
+        $req = "select FicheRecap.idEtat as idEtat, FicheRecap.dateModif as dateModif, FicheRecap.nbJustificatifs as nbJustificatifs, 
+			FicheRecap.montantValide as montantValide, Etat.libelle as libEtat from  FicheRecap inner join Etat on FicheRecap.idEtat = Etat.id 
+			where FicheRecap.idVisiteur ='$idVisiteur' and FicheRecap.mois = '$mois'";
         $res = PdoGsb::$monPdo->query($req);
         $laLigne = $res->fetch();
         return $laLigne;
@@ -239,10 +238,10 @@ class PdoGsb
      * @param $mois sous la forme aaaamm
      */
 
-    public function majEtatFicheFrais($idVisiteur, $mois, $etat)
+    public function majEtatFicheRecap($idVisiteur, $mois, $etat)
     {
-        $req = "update FicheFrais set idEtat = '$etat', dateModif = now() 
-		where FicheFrais.idVisiteur ='$idVisiteur' and FicheFrais.mois = '$mois'";
+        $req = "update FicheRecap set idEtat = '$etat', dateModif = now() 
+		where FicheRecap.idVisiteur ='$idVisiteur' and FicheRecap.mois = '$mois'";
         PdoGsb::$monPdo->exec($req);
     }
 
@@ -292,8 +291,8 @@ class PdoGsb
      */
     public function getLesMoisDisponibles($idVisiteur)
     {
-        $req = "select FicheFrais.mois as mois from  FicheFrais where FicheFrais.idVisiteur ='$idVisiteur' 
-		order by FicheFrais.mois desc ";
+        $req = "select FicheRecap.mois as mois from FicheRecap where FicheRecap.idVisiteur ='$idVisiteur' 
+		order by FicheRecap.mois desc ";
         $res = PdoGsb::$monPdo->query($req);
         $lesMois = array();
         $laLigne = $res->fetch();
@@ -312,7 +311,7 @@ class PdoGsb
     }
 
     /**
-     * Obtient la liste des absences
+     * Retourne le nombre d'absence par motif pour le visiteur et le mois donné
      *
      * @param $idVisiteur
      * @param $mois
@@ -320,14 +319,31 @@ class PdoGsb
      */
     public function getListeAbsences($idVisiteur, $mois)
     {
-        $req = "SELECT * FROM Absence, Motif WHERE Motif.code = Absence.codeMotif AND Absence.idVisiteur = '$idVisiteur' AND Absence.mois = '$mois';";
+        $req = "SELECT * FROM LigneAbsence, Motif WHERE Motif.code = LigneAbsence.codeMotif AND LigneAbsence.idVisiteur = '$idVisiteur' AND LigneAbsence.mois = '$mois';";
         $res = PdoGsb::$monPdo->query($req);
         $absences = $res->fetchAll();
         return $absences;
     }
 
     /**
-     * Obtient codes motifs pour absences
+     * Créer une nouvelle ligne dans LigneAbsence, pour chaque motif, pour le visiteur et le mois donné
+     *
+     * @param $idVisiteur
+     * @param $mois
+     */
+    public function creerNouvellesLigneAbsence($idVisiteur, $mois)
+    {
+        $codes = $this->getLesCodeMotif();
+
+        foreach ($codes as $code) {
+            $code = $code['code'];
+            $req = "INSERT INTO LigneAbsence VALUES('$idVisiteur', '$code', '$mois', 0)";
+            $res = PdoGsb::$monPdo->query($req);
+        }
+    }
+
+    /**
+     * Retourne les codes des motifs des absences
      *
      * @return mixed
      */
@@ -338,31 +354,26 @@ class PdoGsb
         return $res->fetchAll();
     }
 
-    /**
-     * Créer lignes absences pour visiteur
-     *
-     * @param $idVisiteur
-     * @param $mois
-     */
-    public function creerNouvellesLigneAbsence($idVisiteur, $mois)
+    public function majLignesAbsences($idVisiteur, $mois, $absences)
     {
-        $codes = $this->getLesCodeMotif();
-
-        foreach($codes as $code){
-            $code = $code['code'];
-            $req = "INSERT INTO Absence VALUES('$idVisiteur', '$code', '$mois', 0)";
+        foreach ($absences as $code => $nombre) {
+            $req = "UPDATE LigneAbsence SET nombre = '$nombre' WHERE idVisiteur = '$idVisiteur' AND mois = '$mois' AND codeMotif = '$code'";
             $res = PdoGsb::$monPdo->query($req);
         }
     }
 
-    public function majLignesAbsences($idVisiteur, $mois, $absences)
+    /**
+     * Retourne les visiteurs n'ayant pas été absent ce mois-ci.
+     *
+     * @param $mois
+     * @return mixed
+     */
+    public function getVisiteursNonAbsents($mois)
     {
-        foreach ($absences as $code=>$nombre)
-        {
-            $req = "UPDATE Absence SET nombre = '$nombre' WHERE idVisiteur = '$idVisiteur' AND mois = '$mois' AND codeMotif = '$code'";
-            $res = PdoGsb::$monPdo->query($req);
-        }
+        $req = "SELECT nom, prenom, id FROM Visiteur WHERE Visiteur.id NOT IN (SELECT Visiteur.id FROM Visiteur, LigneAbsence WHERE Visiteur.id = LigneAbsence.idVisiteur AND LigneAbsence.nombre != 0 AND LigneAbsence.mois = '$mois') GROUP BY Visiteur.id";
+        $res = PdoGsb::$monPdo->query($req);
 
+        return $res->fetchAll();
     }
 }
 
