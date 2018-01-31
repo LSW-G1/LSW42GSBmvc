@@ -31,11 +31,13 @@ switch ($action) {
             $dateModif = $lesInfosFicheFrais['dateModif'];
             $dateModif = dateAnglaisVersFrancais($dateModif);
             include("vues/v_etatFrais.php");
+            break;
         }
     case 'voirTablettes':
         {
             $tablette = $pdo->getLaTablette($idVisiteur);
             include("vues/v_tablette.php");
+            break;
         }
 }
 ?>
