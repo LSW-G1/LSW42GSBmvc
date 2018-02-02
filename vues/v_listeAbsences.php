@@ -8,7 +8,8 @@
                 <legend>Absences
                 </legend>
                 <?php
-                foreach ($lesAbsences as $uneAbsence) {
+                foreach ($lesAbsences as $uneAbsence)
+                {
                     $codeMotif = $uneAbsence['codeMotif'];
                     $libelle = $uneAbsence['libelle'];
                     $quantite = $uneAbsence['nombre'];
@@ -17,6 +18,7 @@
                         <label for="absences"><?php echo $libelle ?></label>
                         <input type="text" id="absence" name="absences[<?= $codeMotif ?>]" size="10" maxlength="5"
                                value="<?php echo $quantite ?>">
+                        
                     </p>
 
                     <?php

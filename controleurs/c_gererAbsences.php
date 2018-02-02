@@ -22,15 +22,40 @@ switch ($action) {
                 header("Refresh: 0");
             }
 
+			include("vues/v_erreurs.php");
             include("vues/v_listeAbsences.php");
             break;
         }
     case 'validerMajAbsences':
-        {
-            $absences = $_REQUEST["absences"];
-            $pdo->majLignesAbsences($idVisiteur, $mois, $absences);
+	{
+		$valider = true;
 
-            header("Location: index.php?uc=gererAbsences&action=saisirAbsences");
-        }
+		$absences = $_REQUEST["absences"];
+
+		$absencesActuelles = $pdo->getListeAbsences($idVisiteur, $mois);
+
+		foreach ($absences as $code => $nombre)
+		{
+			foreach ($absencesActuelles as $ligne)
+			{
+				if (($code == $ligne["codeMotif"]) && ($nombre < $ligne["nombre"]))
+				{
+					$valider = false;
+				}
+			}
+		}
+
+		if ($valider)
+		{
+			$pdo->majLignesAbsences($idVisiteur, $mois, $absences);
+			header("Location: index.php?uc=gererAbsences&action=saisirAbsences");
+		}
+		else
+		{
+			ajouterErreur("Vous ne pouvez pas enlever vos absences.");
+			include("vues/v_erreurs.php");
+			header("Refresh:3 url=index.php?uc=gererAbsences&action=saisirAbsences");
+		}
+	}
 }
 ?>
