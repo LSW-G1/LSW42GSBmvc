@@ -22,16 +22,13 @@ switch ($action) {
                 header("Refresh: 0");
             }
 
-			include("vues/v_erreurs.php");
             include("vues/v_listeAbsences.php");
             break;
         }
     case 'validerMajAbsences':
 	{
 		$valider = true;
-
 		$absences = $_REQUEST["absences"];
-
 		$absencesActuelles = $pdo->getListeAbsences($idVisiteur, $mois);
 
 		foreach ($absences as $code => $nombre)
