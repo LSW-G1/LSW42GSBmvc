@@ -310,6 +310,14 @@ class PdoGsb
         }
         return $lesMois;
     }
+    
+    public function getClients()
+    {
+		$req = "SELECT * FROM Client";
+        $res = PdoGsb::$monPdo->query($req);
+        
+        return $lesMois;
+	}
 }
 
 ?>
