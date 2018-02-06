@@ -136,4 +136,42 @@ INSERT INTO `Visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, 
   ('f4', 'Gest', 'Alain', 'agest', 'dywvt', '30 avenue de la mer', '13025', 'Berre', '1985-11-01'),
   ('dev', 'Developper', '', 'root', 'root', '', '', '', '2018-01-01');
 
+
+DROP TABLE IF EXISTS `Client`;
+CREATE TABLE `Client` (
+  `idClient` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `prenom` varchar(255) NOT NULL,
+  `dateVisite` date NOT NULL,
+  `idTypeClient` int(11) NOT NULL,
+  PRIMARY KEY (`idClient`),
+  KEY `idTypeClient` (`idTypeClient`),
+  CONSTRAINT `Client_ibfk_1` FOREIGN KEY (`idTypeClient`) REFERENCES `TypeClient` (`idTypeClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `CompteRendu`;
+CREATE TABLE `CompteRendu` (
+  `numeroOrdre` int(11) NOT NULL,
+  `idVisiteur` char(4) NOT NULL,
+  `contenu` text NOT NULL,
+  `note` int(11) NOT NULL,
+  `dateVisite` date NOT NULL,
+  `idClient` int(11) NOT NULL,
+  PRIMARY KEY (`numeroOrdre`,`idVisiteur`),
+  KEY `idVisiteur` (`idVisiteur`),
+  KEY `idClient` (`idClient`),
+  CONSTRAINT `CompteRendu_ibfk_1` FOREIGN KEY (`idVisiteur`) REFERENCES `Visiteur` (`id`),
+  CONSTRAINT `CompteRendu_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `Client` (`idClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `TypeClient`;
+CREATE TABLE `TypeClient` (
+  `idTypeClient` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) NOT NULL,
+  PRIMARY KEY (`idTypeClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 -- 2018-01-18 19:51:22
