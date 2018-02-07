@@ -311,12 +311,23 @@ class PdoGsb
         return $lesMois;
     }
     
+    /**
+     * Retourne tous les clients de la base de données
+     * @return un tableau contenant tous les clients
+     */
     public function getClients()
     {
 		$req = "SELECT * FROM Client";
         $res = PdoGsb::$monPdo->query($req);
         
-        return $lesMois;
+        return $res;
+	}
+	
+	public function addCompteRendu()
+	{
+		$req = "SELECT numeroOrdre FROM CompteRendu WHERE idVisiteur = $idVisiteur";
+		
+		return $res;
 	}
 }
 
