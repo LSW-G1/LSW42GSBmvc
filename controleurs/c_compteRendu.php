@@ -7,7 +7,7 @@ $action = $_REQUEST['action'];
 switch ($action) {
     case 'saisirCompteRendu':
     {
-    	$clients = $pdo->getClient();
+    	$clients = $pdo->getClients();
     	include('vues/v_ajoutCompteRendu.php');
     	break;
     }
@@ -16,7 +16,7 @@ switch ($action) {
     	$contenu = $_REQUEST['contenue'];
     	$note = $_REQUEST['note'];
     	$idClient = $_REQUEST['client'];
-    	$pdo->addCompteRendu($numeroOrdre, $idVisiteur, $contenu, $note, $date, $idClient);
+    	$pdo->addCompteRendu($idVisiteur, $contenu, $note, $date, $idClient);
     }
     case 'listeCompteRendu':
     {

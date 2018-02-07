@@ -310,30 +310,42 @@ class PdoGsb
         }
         return $lesMois;
     }
-    
+
     /**
      * Retourne tous les clients de la base de données
      * @return un tableau contenant tous les clients
      */
     public function getClients()
     {
-		$req = "SELECT * FROM Client";
+        $req = "SELECT * FROM Client";
         $res = PdoGsb::$monPdo->query($req);
-        
+
         return $res;
-	}
-	
-	public function addCompteRendu($idVisiteur, $contenu, $date, $note, $idClient)
-	{
-		$req = "SELECT MAX(numeroOrdre) AS ordreActuel FROM CompteRendu WHERE idVisiteur = '$idVisiteur'";
-		$res = PdoGsb::$monPdo->query($req);
-		
-		$ordreActuel = $res->fetch();		
-		$ordreActuel = intval($ordreActuel[0]) + 1;
-		
-		$req = "INSERT INTO CompteRendu VALUES ('$ordreActuel', '$idVisiteur', '$contenu', '$note', '$date', '$idClient')";
-		$res = PdoGsb::$monPdo->query($req);
-	}
+    }
+
+    public function getCompteRendu($idVisiteur = null)
+    {
+
+        if (isset($idVisiteur)) {
+            $req = "SELECT TypeClient.libelle AS metier, Client.nom AS nomClient, Client.prenom AS prenomClient, CompteRendu.note AS note FROM Client, CompteRendu, TypeClient WHERE TypeClient.idTypeClient = Client.idTypeClient AND Client.idClient = CompteRendu.idClient AND CompteRendu.idVisiteur = '$idVisiteur'";
+        } else {
+            $req = "SELECT TypeClient.libelle AS metier, Client.nom AS nomClient, Client.prenom AS prenomClient, CompteRendu.note AS note, Visiteur.nom AS nomVisiteur, Visiteur.prenom AS prenomVisiteur, CompteRendu.dateVisite FROM Client, CompteRendu, TypeClient, Visiteur WHERE TypeClient.idTypeClient = Client.idTypeClient AND Client.idClient = CompteRendu.idClient AND Visiteur.id = CompteRendu.idVisiteur";
+        }
+        $res = PdoGsb::$monPdo->query($req);
+        return $res;
+    }
+
+    public function addCompteRendu($idVisiteur, $contenu, $date, $note, $idClient)
+    {
+        $req = "SELECT MAX(numeroOrdre) AS ordreActuel FROM CompteRendu WHERE idVisiteur = '$idVisiteur'";
+        $res = PdoGsb::$monPdo->query($req);
+
+        $ordreActuel = $res->fetch();
+        $ordreActuel = intval($ordreActuel[0]) + 1;
+
+        $req = "INSERT INTO CompteRendu VALUES ('$ordreActuel', '$idVisiteur', '$contenu', '$note', '$date', '$idClient')";
+        $res = PdoGsb::$monPdo->query($req);
+    }
 }
 
 ?>
