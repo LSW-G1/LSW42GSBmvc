@@ -7,9 +7,9 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
-DROP DATABASE IF EXISTS `gsb_frais`;
-CREATE DATABASE `gsb_frais` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `gsb_frais`;
+DROP DATABASE IF EXISTS `gsb_frais_absences`;
+CREATE DATABASE `gsb_frais_absences` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `gsb_frais_absences`;
 
 DROP TABLE IF EXISTS `Etat`;
 CREATE TABLE `Etat` (
