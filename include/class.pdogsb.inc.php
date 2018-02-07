@@ -323,11 +323,16 @@ class PdoGsb
         return $res;
 	}
 	
-	public function addCompteRendu()
+	public function addCompteRendu($idVisiteur, $contenu, $date, $note, $idClient)
 	{
-		$req = "SELECT numeroOrdre FROM CompteRendu WHERE idVisiteur = $idVisiteur";
+		$req = "SELECT MAX(numeroOrdre) AS ordreActuel FROM CompteRendu WHERE idVisiteur = '$idVisiteur'";
+		$res = PdoGsb::$monPdo->query($req);
 		
-		return $res;
+		$ordreActuel = $res->fetch();		
+		$ordreActuel = intval($ordreActuel[0]) + 1;
+		
+		$req = "INSERT INTO CompteRendu VALUES ('$ordreActuel', '$idVisiteur', '$contenu', '$note', '$date', '$idClient')";
+		$res = PdoGsb::$monPdo->query($req);
 	}
 }
 
