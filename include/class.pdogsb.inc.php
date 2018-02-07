@@ -352,8 +352,10 @@ class PdoGsb
         $ordreActuel = $res->fetch();
         $ordreActuel = intval($ordreActuel[0]) + 1;
 
-        $req = "INSERT INTO CompteRendu VALUES ('$ordreActuel', '$idVisiteur', '$contenu', '$note', '$date', '$idClient')";
-        $res = PdoGsb::$monPdo->query($req);
+        $req = "INSERT INTO CompteRendu VALUES (:ordreActuel, :idVisiteur, :contenu, :note, :date, :idClient)";
+        
+        $reqPrep = PdoGsb::$monPdo->prepare($req);
+        $reqPrep->execute(array(":ordreActuel" => $ordreActuel, ":idVisiteur" => $idVisiteur, ":contenu" => $contenu, ":note" => $note, ":date" => $date, ":idClient" => $idClient));
     }
 }
 
