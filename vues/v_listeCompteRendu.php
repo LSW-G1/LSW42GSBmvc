@@ -1,5 +1,6 @@
 <!-- Tableau des comptes rendus -->
 <div id="contenu">
+    <a href="index.php?uc=compteRendu&action=saisirCompteRendu"><button style="width: 100%;">Ajouter un compte rendu</button></a>
     <table style="width:100%">
         <tr>
             <th>Nom Visiteur</th>
