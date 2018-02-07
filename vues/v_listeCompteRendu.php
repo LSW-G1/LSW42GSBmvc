@@ -19,7 +19,7 @@
             <td><?= $client["prenomClient"]; ?></td>
             <td><?= $client["dateVisite"]; ?></td>
             <td><?= $client["note"]; ?></td>
-            <td><a href="#">Lire le compte rendu</a></td>
+            <td><a href="index.php?uc=compteRendu&action=lire&idVisiteur=<?= $_SESSION['idVisiteur']; ?>&numeroOrdre=<?= $client['numeroOrdre']; ?>">Lire le compte rendu</a></td>
         </tr>
         <?php endforeach; ?>
     </table>

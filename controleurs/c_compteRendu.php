@@ -16,26 +16,30 @@ switch ($action) {
     	$contenu = $_REQUEST['contenue'];
     	$note = $_REQUEST['note'];
     	$idClient = $_REQUEST['client'];
-    	$pdo->addCompteRendu($idVisiteur, $contenu, $note, $date, $idClient);
+    	$pdo->addCompteRendu($idVisiteur, $contenu, $note, date('Y-m-d'), $idClient);
+    	header("Location: index.php?uc=compteRendu&action=listeCompteRendu");
+    	break;
     }
     case 'listeCompteRendu':
     {
     	// client / nom / métier
     	if ($idVisiteur == 'dev') 
     	{
-    		$data = $pdo->getCompteRendu(); //liste de tous les comptes rendu
+    		$data = $pdo->getListeCompteRendu(); //liste de tous les comptes rendu
     	}
     	else
     	{
-    		$data = $pdo->getCompteRendu($idVisiteur); //liste des comptes rendu du visiteur
+    		$data = $pdo->getListeCompteRendu($idVisiteur); //liste des comptes rendu du visiteur
     	}
     	include('vues/v_listeCompteRendu.php');
     	break;
     }
-    case 'compteRendu':
+    case 'lire':
     {
+        $idVisiteur = $_GET["idVisiteur"];
+        $numeroOrdre = $_GET["numeroOrdre"];
         $data = $pdo->getCompteRendu($idVisiteur, $numeroOrdre);
-        include('vues/compteRendu.php');
+        include('vues/v_compteRendu.php');
         break;
     }	
 }
