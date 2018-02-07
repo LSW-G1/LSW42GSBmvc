@@ -8,7 +8,7 @@ switch ($action) {
     case 'saisirCompteRendu':
     {
     	$clients = $pdo->getClient();
-    	include('v_ajoutCompteRendu.php');
+    	include('vues/v_ajoutCompteRendu.php');
     	break;
     }
     case 'validerCompteRendu':
@@ -16,25 +16,29 @@ switch ($action) {
     	$contenu = $_REQUEST['contenue'];
     	$note = $_REQUEST['note'];
     	$idClient = $_REQUEST['client'];
-    	$pdo->($contenu, $note, $aaaamm, $idVisiteur, $idClient);
-    	break;
+    	$pdo->addCompteRendu($contenu, $note, $aaaamm, $idVisiteur, $idClient);
     }
-    case 'compteRendu':
+    case 'listeCompteRendu':
     {
     	// client / nom / métier
     	if ($idVisiteur == 'dev') 
     	{
-    		$data = $pdo->(); //liste de tous les comptes rendu
+    		$data = $pdo->getCompteRendu(); //liste de tous les comptes rendu
     	}
     	else
     	{
-    		$data = $pdo->($idVisiteur); //liste des comptes rendu du visiteur
+    		$data = $pdo->getCompteRendu($idVisiteur); //liste des comptes rendu du visiteur
     	}
-    	include('v_listeCompteRendu');
+    	include('vues/v_listeCompteRendu.php');
     	break;
     }
-    	
-
+    case 'compteRendu':
+    {
+        $data = $pdo->getCompteRendu($idVisiteur, $numeroOrdre);
+        include('vues/compteRendu.php');
+        break;
+    }	
+}
 // ajout compte rendu -> v_ajoutCompteRendu.php
 // etat compte rendu -> voir ce qu'il y a dans -> v_etatCompteRendu.php
 // liste des compte rendu -> v_compteRendu.php 
