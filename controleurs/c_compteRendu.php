@@ -1,7 +1,7 @@
 <?php
 include("vues/v_sommaire.php");
 $idVisiteur = $_SESSION['idVisiteur'];
-$aaaamm = getMois(date("d/m/Y"));
+$date = getMois(date("Y-m-d"));
 $action = $_REQUEST['action'];
 
 switch ($action) {
@@ -16,7 +16,7 @@ switch ($action) {
     	$contenu = $_REQUEST['contenue'];
     	$note = $_REQUEST['note'];
     	$idClient = $_REQUEST['client'];
-    	$pdo->addCompteRendu($contenu, $note, $aaaamm, $idVisiteur, $idClient);
+    	$pdo->addCompteRendu($numeroOrdre, $idVisiteur, $contenu, $note, $date, $idClient);
     }
     case 'listeCompteRendu':
     {
