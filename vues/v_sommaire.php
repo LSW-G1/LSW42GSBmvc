@@ -21,6 +21,9 @@
                 fiches de frais</a>
         </li>
         <li class="smenu">
+            <a href="index.php?uc=compteRendu&action=listeCompteRendu">Compte rendu</a>
+        </li>
+        <li class="smenu">
             <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>
         </li>
     </ul>
