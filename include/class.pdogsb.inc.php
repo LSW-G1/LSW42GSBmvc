@@ -337,7 +337,7 @@ class PdoGsb
 
     public function getCompteRendu($idVisiteur, $numeroOrdre)
     {
-        $req = "SELECT TypeClient.libelle AS metier, Client.nom AS nomClient, Client.prenom AS prenomClient, CompteRendu.contenu AS contenu, CompteRendu.note AS note, Visiteur.nom AS nomVisiteur, Visiteur.prenom AS prenomVisiteur FROM Client, CompteRendu, TypeClient, Visiteur WHERE TypeClient.idTypeClient = Client.idTypeClient AND Client.idClient = CompteRendu.idClient AND CompteRendu.idVisiteur = '$idVisiteur' AND CompteRendu.numeroOrdre = '$numeroOrdre';";
+        $req = "SELECT CompteRendu.numeroOrdre AS numeroOrdre, TypeClient.libelle AS metier, Client.nom AS nomClient, Client.prenom AS prenomClient, CompteRendu.contenu AS contenu, CompteRendu.note AS note, Visiteur.nom AS nomVisiteur, Visiteur.prenom AS prenomVisiteur FROM Client, CompteRendu, TypeClient, Visiteur WHERE TypeClient.idTypeClient = Client.idTypeClient AND Client.idClient = CompteRendu.idClient AND CompteRendu.idVisiteur = '$idVisiteur' AND CompteRendu.numeroOrdre = '$numeroOrdre';";
         $res = PdoGsb::$monPdo->query($req);
         $data = $res->fetch();
 
@@ -356,6 +356,21 @@ class PdoGsb
         
         $reqPrep = PdoGsb::$monPdo->prepare($req);
         $reqPrep->execute(array(":ordreActuel" => $ordreActuel, ":idVisiteur" => $idVisiteur, ":contenu" => $contenu, ":note" => $note, ":date" => $date, ":idClient" => $idClient));
+    }
+
+    public function updateCompteRendu($idVisiteur, $numeroOrdre, $contenu, $note, $idClient)
+    {
+        $req = "UPDATE CompteRendu SET contenu = (:contenu), note = (:note), idClient = (:idClient) 
+            WHERE idVisiteur='$idVisiteur' AND numeroOrdre = '$numeroOrdre' ";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute(array(":contenu" => $contenu, ":note" => $note, ":idClient" => $idClient));
+    }
+
+    public function deleteCompteRendu($idVisiteur, $numeroOrdre)
+    {
+        $req = "DELETE FROM CompteRendu WHERE idVisiteur = (:idVisiteur) AND numeroOrdre = (:numeroOrdre)";
+        $res = PdoGsb::$monPdo->prepare($req);
+        $res->execute(array(":idVisiteur" => $idVisiteur, ":numeroOrdre" => $numeroOrdre));
     }
 }
 
